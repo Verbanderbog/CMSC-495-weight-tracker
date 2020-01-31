@@ -38,6 +38,8 @@ public class Main {
       users.add(user2);
     } catch (DuplicateUserException ex) {
       
+    } catch (IOException ex) {
+      
     }
     Date now = new Date();
     user.addHeight(now, 300);
@@ -45,11 +47,19 @@ public class Main {
     user.setTargetWeight(4);
     user.setTargetWeight(7);
     try {
+      users.updateUser(user);
+    } catch (Exception ex) {
+      
+    }
+    try {
       
       System.out.println(gson.toJson(ReadWriteJSON.readUsers()));
+      System.out.println(gson.toJson(ReadWriteJSON.readUser("Tom")));
     } catch (FileNotFoundException ex) {
       
     } catch (IOException ex) {
+      
+    } catch (Exception ex) {
       
     }
 

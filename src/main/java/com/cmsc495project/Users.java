@@ -5,44 +5,50 @@
  */
 package com.cmsc495project;
 
-import java.util.HashMap;
-import java.util.Iterator;
+import java.io.IOException;
+import java.util.*;
 
 /**
  *
  * @author Dylan Veraart
  */
 public class Users {
-  HashMap<String,User> users;
+  HashSet<String> users;
   
   public Users(){
-    users=new HashMap();
+    users=new HashSet();
   }
   
-  public void add(User user) throws DuplicateUserException{
-    if(users.containsKey(user.getUsername()))
+  public void add(User user) throws DuplicateUserException, IOException{
+    if(users.contains(user.getUsername()))
       throw new DuplicateUserException();
-    users.put(user.getUsername(), user);
+    ReadWriteJSON.writeUser(user);
+    users.add(user.getUsername());
+    ReadWriteJSON.writeUsers(this);
   }
   
-  public void remove(String username){
+  public void remove(String username) throws IOException{
+    ReadWriteJSON.deleteUser(username);
     users.remove(username);
+    ReadWriteJSON.writeUsers(this);
   }
-  public void remove(User user){
-    users.remove(user.getUsername());
+  public void remove(User user) throws IOException{
+    this.remove(user.getUsername());
   }
   
   public boolean contains(String username){
-    return users.containsKey(username);
-  }
-  
-  public User get(String username){
-    return users.get(username);
+    return users.contains(username);
   }
   
   public Iterator keyIterator(){
-    return users.keySet().iterator();
+    return users.iterator();
   }
   
+  public void updateUser(User user) throws IOException, Exception{
+    if(users.contains(user.getUsername()))
+      ReadWriteJSON.writeUser(user);
+    else
+      throw new Exception("No user to update+");
+  }
   
 }

@@ -17,7 +17,7 @@ public class User {
   private HashMap<Long,Double> dailyWeights;
   private String username;
   
-  public User(){
+  private User(){
     heights=new HashMap();
     dailyWeights=new HashMap();
   }
