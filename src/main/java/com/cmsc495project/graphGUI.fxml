@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.pixelduke.javafx.chart.DateAxis?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graph">
+   <children>
+      <HBox alignment="TOP_CENTER">
+         <children>
+            <LineChart fx:id="graph">
+               <xAxis>
+                  <DateAxis fx:id="dateAxis" label="Date" side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis fx:id="weightAxis" label="Weight" side="LEFT" />
+               </yAxis>
+            </LineChart>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
+         <children>
+            <DatePicker fx:id="startDatePicker" />
+            <Label text="—" />
+            <DatePicker fx:id="endDatePicker" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

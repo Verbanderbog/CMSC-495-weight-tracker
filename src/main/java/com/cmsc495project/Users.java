@@ -40,7 +40,7 @@ public class Users {
     return users.contains(username);
   }
   
-  public Iterator keyIterator(){
+  public Iterator iterator(){
     return users.iterator();
   }
   
