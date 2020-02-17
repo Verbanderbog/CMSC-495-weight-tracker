@@ -8,10 +8,12 @@ package com.cmsc495project;
 import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Date;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import java.net.URL;
 import javafx.stage.Stage;
 /**
  *
@@ -31,10 +33,13 @@ public class Main {
 	static User user;
 
 	
-	public static void main(){
+	public static void main() throws MalformedURLException, IOException{
 		mainStage = new Stage();
-        Parent loginRoot = FXMLLoader.load(*fxml loginGUI file*);
-		constructLoginButtons()
+        int width =300;
+        int height=300;
+        Parent loginRoot;
+   loginRoot = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
+		constructLoginButtons();
 		loginScene = new Scene(loginRoot, width, height);
         mainStage.setScene(loginScene);
 		Parent mainRoot = FXMLLoader.load(*fxml mainGUI file*);
