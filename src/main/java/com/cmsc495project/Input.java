@@ -5,6 +5,10 @@
  */
 package com.cmsc495project;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
@@ -38,25 +42,31 @@ public class Input {
   static Label goalLabel;
 
   static Button userButton(String username) {
-    Create Button button;
-    Create actionEvent
-    
-      (){
-			Main.user = ReadWriteJSON.readUser(username, User.class);
-      Main.mainStage.setScene(Main.mainScene);
-    };
-    set button action to actionEvent;
+    Button button = new Button(username);
+    button.setOnAction(new EventHandler() {
+
+      @Override
+      public void handle(Event t) {
+        try {
+          Main.user = ReadWriteJSON.readUser(username);
+        } catch (Exception ex) {
+          
+        }
+        Main.mainStage.setScene(Main.mainScene);
+      }
+    });
     return button;
   }
 
   static Button newUserButton() {
-    Create Button button;
-    Create actionEvent
-    
-      (){
-			addNewUser();
-    };
-    set button action to actionEvent;
+    Button button = new Button("+ New User");
+    button.setOnAction(new EventHandler() {
+
+      @Override
+      public void handle(Event t) {
+        addNewUser();
+      }
+    });
     return button;
   }
 
@@ -66,6 +76,8 @@ public class Input {
   }
 
   static void submitNewUser() {
+    User user = new User(newUserName.getText());
+    user.setBirthday(newUserBirthDate.getValue());
     Value of newUser fields to new User(), user;
     Main.user = user;
     Main.setMainLabels();
@@ -84,6 +96,7 @@ public class Input {
   static void submitNewWeight() {
     1. Assign value of newUserWeight field to a daily weight variable;
     2. Store new weight 
+    
     in HashMap of collective weights;
     3. Hide daily weight input scene;
     4. Set main scene;
@@ -97,7 +110,7 @@ public class Input {
 
   static void submitUserSettings() {
     1. Re - assign values of settings fields;
-    2. Update labels for user data  as needed;
+    2. Update labels for user data   as needed;
     3. Hide user settings scene;
     4. Set main scene;
   }

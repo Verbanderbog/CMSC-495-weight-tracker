@@ -5,6 +5,7 @@
  */
 package com.cmsc495project;
 
+import java.time.*;
 import java.util.*;
 
 /**
@@ -28,28 +29,28 @@ public class User {
     this.username=username;
   }
   
-  public void addHeight(Date date, int height){
-    heights.put(date.getTime(), height);
+  public void addHeight(LocalDate date, int height){
+    heights.put(date.toEpochDay(), height);
   }
   public void setTargetWeight(double weight){
     targetWeight=weight;
   }
-  public void addWeight(Date date, double weight){
-    dailyWeights.put(date.getTime(), weight);
+  public void addWeight(LocalDate date, double weight){
+    dailyWeights.put(date.toEpochDay(), weight);
   }
   public void setUsername(String user){
     username=user;
   }
-  public void setBirthday(Date date){
-    birthdate=date.getTime();
+  public void setBirthday(LocalDate date){
+    birthdate=date.toEpochDay();
   }
 
   
   public HashMap getHeights(){
     return heights;
   }
-  public int getHeight(Date date){
-    return heights.get(date.getTime());
+  public int getHeight(long date){
+    return heights.get(date);
   }
   public double getTargetWeight(){
     return targetWeight;
@@ -57,31 +58,25 @@ public class User {
   public HashMap getDailyWeights(){
     return dailyWeights;
   }
-  public double getWeight(Date date){
-    return dailyWeights.get(date.getTime());
+  public double getWeight(long date){
+    return dailyWeights.get(date);
   }
   public String getUsername(){
     return username;
   }
-  public Date getBirthday(){
-    return new Date(birthdate);
+  public long getBirthday(){
+    return birthdate;
   }
   
   public List getSortedHeightKeys(){
     Set<Long> set = heights.keySet();
-    List<Date> dates = new ArrayList<>();
-    for(Long longdate : set){
-      dates.add(new Date(longdate));
-    }
+    List<Long> dates = new ArrayList<>(set);
     Collections.sort(dates);
     return dates;
   }
   public List getSortedWeightKeys(){
     Set<Long> set = dailyWeights.keySet();
-    List<Date> dates = new ArrayList<>();
-    for(Long longdate : set){
-      dates.add(new Date(longdate));
-    }
+    List<Long> dates = new ArrayList<>(set);
     Collections.sort(dates);
     return dates;
   }

@@ -37,8 +37,8 @@ public class Main {
 		mainStage = new Stage();
         int width =300;
         int height=300;
-        Parent loginRoot;
-   loginRoot = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
+        Parent loginRoot = FXMLLoader.load(Main.class.getResource("login.fxml"));
+   
 		constructLoginButtons();
 		loginScene = new Scene(loginRoot, width, height);
         mainStage.setScene(loginScene);
@@ -57,7 +57,7 @@ public class Main {
 	static void constructLoginButtons(){
 		users = ReadWriteJSON.readUsers();
 		for (String username : users.users){
-			Add Input.userButton(username) to Input.loginButtons;
+			Input.loginButtons.getChildren().add(Input.userButton(username));
 		}
 		
 		Add Input.newUserButton() to Input.loginButtons;
