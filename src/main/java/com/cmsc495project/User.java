@@ -5,7 +5,7 @@
  */
 package com.cmsc495project;
 
-import java.time.*;
+
 import java.util.*;
 
 /**
@@ -29,20 +29,20 @@ public class User {
     this.username=username;
   }
   
-  public void addHeight(LocalDate date, int height){
-    heights.put(date.toEpochDay(), height);
+  public void addHeight(long date, int height){
+    heights.put(date, height);
   }
   public void setTargetWeight(double weight){
     targetWeight=weight;
   }
-  public void addWeight(LocalDate date, double weight){
-    dailyWeights.put(date.toEpochDay(), weight);
+  public void addWeight(long date, double weight){
+    dailyWeights.put(date, weight);
   }
   public void setUsername(String user){
     username=user;
   }
-  public void setBirthday(LocalDate date){
-    birthdate=date.toEpochDay();
+  public void setBirthday(long date){
+    birthdate=date;
   }
 
   
