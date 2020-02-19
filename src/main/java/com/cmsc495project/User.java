@@ -18,10 +18,12 @@ public class User {
   private HashMap<Long,Double> dailyWeights;
   private String username;
   private long birthdate;
+  private HashMap<Long,Double> bmiValues;
   
   private User(){
     heights=new HashMap();
     dailyWeights=new HashMap();
+    bmiValues = new HashMap();
   }
   
   public User(String username){
@@ -44,7 +46,9 @@ public class User {
   public void setBirthday(long date){
     birthdate=date;
   }
-
+  public void addBMI(long date, double bmi) {
+    bmiValues.put(date, bmi);
+  }
   
   public HashMap getHeights(){
     return heights;
@@ -67,6 +71,9 @@ public class User {
   public long getBirthday(){
     return birthdate;
   }
+  public HashMap getBMIValues(){
+    return bmiValues;
+  }
   
   public List getSortedHeightKeys(){
     Set<Long> set = heights.keySet();
@@ -80,4 +87,9 @@ public class User {
     Collections.sort(dates);
     return dates;
   }
+  public List getSortedBMIKeys(){
+    Set<Long> set = bmiValues.keySet();
+    List<Long> dates = new ArrayList<>(set);
+    Collections.sort(dates);
+    return dates;
 }
