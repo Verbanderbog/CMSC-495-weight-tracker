@@ -8,7 +8,6 @@ package com.cmsc495project;
 /**
  *
  * @author Dylan Veraart
- *
  */
 public class Calculator {
     
