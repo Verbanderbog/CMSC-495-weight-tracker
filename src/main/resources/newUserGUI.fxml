@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -11,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="383.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmsc495project.Input">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="383.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmsc495project.Input">
    <bottom>
       <Button mnemonicParsing="false" onAction="#submitNewUser" text="Submit" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -19,7 +18,7 @@
          </BorderPane.margin>
       </Button>
    </bottom>
-   <top>
+   <center>
       <VBox prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="50.0" right="50.0" top="50.0" />
@@ -41,19 +40,6 @@
             </GridPane>
             <GridPane alignment="CENTER_RIGHT">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Birth Date" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <DatePicker fx:id="newUserBirthDate" prefHeight="25.0" prefWidth="160.0" GridPane.rowIndex="1" />
-               </children>
-            </GridPane>
-            <GridPane alignment="CENTER_RIGHT">
-               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="94.0" prefWidth="94.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="189.0" />
                </columnConstraints>
@@ -62,8 +48,8 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label fx:id="newUserWeight" alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Weight" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <TextField prefHeight="25.0" prefWidth="100.0" GridPane.rowIndex="1" />
+                  <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Weight" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
+                  <TextField fx:id="newUserWeight" prefHeight="25.0" prefWidth="100.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane alignment="CENTER_RIGHT">
@@ -100,20 +86,7 @@
                   <TextField fx:id="newUserHeightIn" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <GridPane alignment="CENTER_RIGHT">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Date" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <DatePicker fx:id="newUserDate" prefHeight="25.0" prefWidth="162.0" GridPane.rowIndex="1" />
-               </children>
-            </GridPane>
          </children>
       </VBox>
-   </top>
+   </center>
 </BorderPane>

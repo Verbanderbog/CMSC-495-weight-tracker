@@ -39,13 +39,11 @@ public class Input implements Initializable {
   TextField newUserHeightFt;
   @FXML
   TextField newUserHeightIn;
-  @FXML
-  DatePicker newUserBirthDate;
+
 
   @FXML
   TextField settingsName;
-  @FXML
-  DatePicker settingsBirthDate;
+
 
   @FXML
   TextField dailyWeight;
@@ -109,7 +107,6 @@ public class Input implements Initializable {
 
   void addNewUser() {
     mainApp.popupStage.setScene(mainApp.newUserScene);
-    newUserBirthDate.setValue(LocalDate.now());
     mainApp.popupStage.show();
   }
 
