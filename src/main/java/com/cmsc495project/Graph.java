@@ -6,6 +6,7 @@
 package com.cmsc495project;
 
 import com.pixelduke.javafx.chart.*;
+import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 
@@ -14,19 +15,14 @@ import javafx.scene.control.*;
  * @author Dylan Veraart
  */
 public class Graph {
-  static DatePicker startDatePicker;
-static DatePicker endDatePicker;
-static LineChart chart;
-static DateAxis dateAxis;
-
-static void constructGraph(User user){
+@FXML DatePicker startDatePicker;
+@FXML DatePicker endDatePicker;
+@FXML LineChart chart;
+@FXML DateAxis dateAxis;
+Main mainApp;
+void constructGraph(){
 
 }
 
-static void startDateChange(){
-	set dateAxis lower bound to start date;
-}
-static void endDateChange(){
-	set dateAxis upper bound to end date;
-}
+
 }

@@ -11,14 +11,16 @@ package com.cmsc495project;
  */
 public class Calculator {
 
-  static double calcBMI() {
-    Calculate a BMI using supplied values;
-    Return the user’s BMI;
+  static double calcBMI(User user) {
+    //Calculate a BMI using supplied values;
+    //Return the user’s BMI;
+    return 0;
   }
 
-  static double calcBMIPercentChange(User user, double startDate, double endDate) {
-    Calculate the % change between the initial BMI and the most recent(i.e.current) BMI;
-    Return the percent change;
+  static double calcBMIPercentChange(User user) {
+    //Calculate the % change between the initial BMI and the most recent(i.e.current) BMI;
+    //Return the percent change;
+    return 0;
   }
 
 }
