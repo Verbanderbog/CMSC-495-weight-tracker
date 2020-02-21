@@ -162,7 +162,7 @@ public class Input implements Initializable {
 
   @FXML
   void addNewWeight() {
-    
+
     /*
     1. Set dailyScene to popupStage;
     2. Show popupStage;
@@ -189,7 +189,7 @@ public class Input implements Initializable {
 
   @FXML
   void submitUserSettings() {
-    
+    mainApp.popupStage.close();
     /*
     1. Re - assign values of settings fields;
     2. Update labels for user data   as needed;
@@ -210,12 +210,15 @@ public class Input implements Initializable {
       try {
         mainApp.users.remove(mainApp.user);
         mainApp.popupStage.hide();
-        logout();
+        mainApp.constructLoginButtons();
+        mainApp.mainStage.setScene(mainApp.loginScene);
+        mainApp.mainStage.setTitle("Daily Weight Tracker");
+        mainApp.user = null;
       } catch (IOException ex) {
-        
+
       }
-      
-    } 
+
+    }
   }
 
   @FXML
@@ -223,6 +226,11 @@ public class Input implements Initializable {
     mainApp.constructLoginButtons();
     mainApp.mainStage.setScene(mainApp.loginScene);
     mainApp.mainStage.setTitle("Daily Weight Tracker");
+    try {
+      ReadWriteJSON.writeUser(mainApp.user);
+    } catch (IOException ex) {
+
+    }
     mainApp.user = null;
 
   }
