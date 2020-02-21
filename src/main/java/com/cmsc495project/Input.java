@@ -8,6 +8,7 @@ package com.cmsc495project;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
@@ -40,10 +42,10 @@ public class Input implements Initializable {
   @FXML
   TextField newUserHeightIn;
 
-
   @FXML
   TextField settingsName;
-
+  @FXML
+  TextField settingsTargetWeight;
 
   @FXML
   TextField dailyWeight;
@@ -116,22 +118,22 @@ public class Input implements Initializable {
       User user = new User(newUserName.getText());
       user.setTargetWeight(Double.parseDouble(newUserTargetWeight.getText()));
       user.addWeight(LocalDate.now().toEpochDay(), Double.parseDouble(newUserWeight.getText()));
-      double inches,feet;
-      feet=-1;
+      double inches, feet;
+      feet = -1;
       try {
         inches = Double.parseDouble(newUserHeightIn.getText());
       } catch (NumberFormatException ex) {
-        inches=0;
+        inches = 0;
         try {
-        feet = Double.parseDouble(newUserHeightFt.getText()) * 12;
+          feet = Double.parseDouble(newUserHeightFt.getText()) * 12;
         } catch (NumberFormatException c) {
           throw new NumberFormatException();
         }
       }
-      if (feet<0){
+      if (feet < 0) {
         feet = Double.parseDouble(newUserHeightFt.getText()) * 12;
       }
-      if (feet+inches<=0) {
+      if (feet + inches <= 0) {
         throw new NumberFormatException();
       }
       user.addHeight(LocalDate.now().toEpochDay(), (int) (feet + inches));
@@ -160,6 +162,7 @@ public class Input implements Initializable {
 
   @FXML
   void addNewWeight() {
+    
     /*
     1. Set dailyScene to popupStage;
     2. Show popupStage;
@@ -180,21 +183,39 @@ public class Input implements Initializable {
 
   @FXML
   void changeUserSettings() {
-    /*
-    1. Set settingsScene to popupStage;
-    2. Show popupStage;
-    7
-     */
+    mainApp.popupStage.setScene(mainApp.settingsScene);
+    mainApp.popupStage.show();
   }
 
   @FXML
   void submitUserSettings() {
+    
     /*
     1. Re - assign values of settings fields;
     2. Update labels for user data   as needed;
     3. Hide user settings scene;
     4. Set main scene;
      */
+  }
+
+  @FXML
+  void deleteAccount() {
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+    alert.setTitle("Daily Weight Tracker");
+    alert.setHeaderText("Delete User Account");
+    alert.setContentText("Are you sure you want to delete your account? This cannot be undone.");
+
+    Optional<ButtonType> result = alert.showAndWait();
+    if (result.get() == ButtonType.OK) {
+      try {
+        mainApp.users.remove(mainApp.user);
+        mainApp.popupStage.hide();
+        logout();
+      } catch (IOException ex) {
+        
+      }
+      
+    } 
   }
 
   @FXML

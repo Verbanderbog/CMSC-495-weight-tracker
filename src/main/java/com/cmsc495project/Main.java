@@ -27,6 +27,7 @@ public class Main extends Application {
   Input inputMain;
   Input inputLogin;
   Input inputNewUser;
+  Input inputSettings;
   Graph graph;
   Stage mainStage;
   Stage popupStage;
@@ -80,19 +81,19 @@ public class Main extends Application {
 
     loginScene = new Scene(loginRoot, width, height);
     mainStage.setScene(loginScene);
-    FXMLLoader loader2 = new FXMLLoader(Input.class.getClassLoader().getResource("mainGUI.fxml"));
-    Parent mainRoot = loader2.load();
-    inputMain = loader2.getController();
+    loader = new FXMLLoader(Input.class.getClassLoader().getResource("mainGUI.fxml"));
+    Parent mainRoot = loader.load();
+    inputMain = loader.getController();
     inputMain.mainApp = this;
-    FXMLLoader loader3 = new FXMLLoader(Graph.class.getClassLoader().getResource("graphGUI.fxml"));
-    Parent graphRoot = loader3.load();
-    graph = loader3.getController();
+    loader = new FXMLLoader(Graph.class.getClassLoader().getResource("graphGUI.fxml"));
+    Parent graphRoot = loader.load();
+    graph = loader.getController();
     graph.mainApp = this;
     inputMain.graphContainer.getChildren().add(graphRoot);
     mainScene = new Scene(mainRoot, width + 50, height);
-    FXMLLoader loader4 = new FXMLLoader(Input.class.getClassLoader().getResource("newUserGUI.fxml"));
-    Parent newUserRoot = loader4.load();
-    inputNewUser = loader4.getController();
+    loader = new FXMLLoader(Input.class.getClassLoader().getResource("newUserGUI.fxml"));
+    Parent newUserRoot = loader.load();
+    inputNewUser = loader.getController();
     inputNewUser.mainApp = this;
     newUserScene = new Scene(newUserRoot, width, height);
     mainStage.setMinWidth(width);
@@ -101,7 +102,13 @@ public class Main extends Application {
     popupStage = new Stage();
     popupStage.initModality(Modality.WINDOW_MODAL);
     popupStage.initOwner(mainStage);
+    loader = new FXMLLoader(Input.class.getClassLoader().getResource("settingsGUI.fxml"));
+    Parent settingsRoot = loader.load();
+    inputSettings = loader.getController();
+    inputSettings.mainApp = this;
+    settingsScene = new Scene(settingsRoot, width, height);
     mainStage.show();
+    
 
   }
 
