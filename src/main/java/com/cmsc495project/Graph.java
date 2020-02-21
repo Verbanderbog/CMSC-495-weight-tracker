@@ -21,7 +21,7 @@ public class Graph {
 @FXML DateAxis dateAxis;
 Main mainApp;
 void constructGraph(){
-
+  
 }
 
 

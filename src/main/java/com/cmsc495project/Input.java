@@ -184,12 +184,29 @@ public class Input implements Initializable {
   @FXML
   void changeUserSettings() {
     mainApp.popupStage.setScene(mainApp.settingsScene);
+    settingsName.setText(mainApp.user.getUsername());
+    settingsTargetWeight.setText(Double.toString(mainApp.user.getTargetWeight()));
     mainApp.popupStage.show();
   }
 
   @FXML
   void submitUserSettings() {
-    mainApp.popupStage.close();
+
+    try {
+      if (!mainApp.users.contains(settingsName.getText())) {
+        mainApp.user.setUsername(settingsName.getText());
+        mainApp.users.add(mainApp.user);
+      } else if(settingsName.getText()!=mainApp.user.getUsername()) {
+        throw new DuplicateUserException();
+      }
+      mainApp.user.setTargetWeight(Double.parseDouble(settingsTargetWeight.getText()));
+      mainApp.popupStage.hide();
+    } catch (DuplicateUserException ex) {
+
+    } catch (IOException ex) {
+
+    }
+
     /*
     1. Re - assign values of settings fields;
     2. Update labels for user data   as needed;
@@ -241,14 +258,8 @@ public class Input implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    if (graphContainer != null) {
-      try {
-        Parent graphRoot = FXMLLoader.load(Graph.class.getClassLoader().getResource("graphGUI.fxml"));
-        graphContainer.getChildren().add(graphRoot);
-      } catch (IOException ex) {
 
-      }
 
-    }
+    
   }
 }

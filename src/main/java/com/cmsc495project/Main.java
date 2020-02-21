@@ -89,7 +89,7 @@ public class Main extends Application {
     Parent graphRoot = loader.load();
     graph = loader.getController();
     graph.mainApp = this;
-    inputMain.graphContainer.getChildren().add(graphRoot);
+    inputMain.graphContainer.setCenter(graphRoot);
     mainScene = new Scene(mainRoot, width + 50, height);
     loader = new FXMLLoader(Input.class.getClassLoader().getResource("newUserGUI.fxml"));
     Parent newUserRoot = loader.load();
