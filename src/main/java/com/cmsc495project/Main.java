@@ -5,70 +5,126 @@
  */
 package com.cmsc495project;
 
-import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Application;
 import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import java.net.URL;
+import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 /**
  *
  * @author Dylan Veraart
  */
-public class Main {
+public class Main extends Application {
 
- static Stage mainStage;
-	static Stage popupStage;
-	static Scene newUserScene;
-	static Scene loginScene;
-	
-	static Scene mainScene;
-	static Scene settingsScene;
-	static Scene dailyScene;
-	static Users users;
-	static User user;
+  Input inputMain;
+  Input inputLogin;
+  Input inputNewUser;
+  Input inputSettings;
+  Graph graph;
+  Stage mainStage;
+  Stage popupStage;
+  Scene newUserScene;
+  Scene loginScene;
 
-	
-	public static void main() throws MalformedURLException, IOException{
-		mainStage = new Stage();
-        int width =300;
-        int height=300;
-        Parent loginRoot = FXMLLoader.load(Main.class.getResource("login.fxml"));
-   
-		constructLoginButtons();
-		loginScene = new Scene(loginRoot, width, height);
-        mainStage.setScene(loginScene);
-		Parent mainRoot = FXMLLoader.load(*fxml mainGUI file*);
-		Parent graphRoot = FXMLLoader.load(*fxml graphGUI file*);
-		Input.graphContainer.getChildren().add(graphRoot);
-		Graph.constructGraph(user);
-		mainScene = new Scene(mainRoot, width, height);
-		Parent mainRoot = FXMLLoader.load(*fxml mainScene file*);
-		mainScene = new Scene(mainRoot, width, height);
-        mainStage.show();
-		
-		
-	}
-	
-	static void constructLoginButtons(){
-		users = ReadWriteJSON.readUsers();
-		for (String username : users.users){
-			Input.loginButtons.getChildren().add(Input.userButton(username));
-		}
-		
-		Add Input.newUserButton() to Input.loginButtons;
-	}
-	
-	static void setMainLabels(){
-		set Input.weightLabel to user.getCurrentWeight();
-		set Input.BMILabel to Calculator.calcBMI(user);
-		set Input.BMIPercentLabel to Calculator.calcBMIPercentChange(user, Graph.startDatePicker.getValue(), Graph.endDatePicker.getValue())
-		set Input.goalLabel to user.targetWeight;
-	}
+  Scene mainScene;
+  Scene settingsScene;
+  Scene dailyScene;
+  Users users;
+  User user;
+
+  public static void main(String args[]) throws MalformedURLException, IOException {
+    Main.launch(Main.class);
+  }
+
+  void constructLoginButtons() {
+    try {
+      users = ReadWriteJSON.readUsers();
+    } catch (FileNotFoundException ex) {
+      users = new Users();
+    }
+    inputLogin.loginButtons.getChildren().clear();
+    for (String username : users.users) {
+      inputLogin.loginButtons.getChildren().add(inputLogin.userButton(username));
+    }
+    inputLogin.loginButtons.getChildren().add(inputLogin.newUserButton());
+  }
+
+  void setMainLabels() {
+    mainStage.setMinWidth(550);
+    mainStage.setTitle("Daily Weight Tracker - " + user.getUsername());
+    inputMain.weightLabel.setText(Double.toString(user.getCurrentWeight()));
+    inputMain.BMILabel.setText(Double.toString(Calculator.calcBMI(user)));
+    inputMain.BMIPercentLabel.setText(Double.toString(Calculator.calcBMIPercentChange(user)));
+    inputMain.goalLabel.setText(Double.toString(user.getTargetWeight()));
+
+  }
+
+  @Override
+  public void start(Stage mainStage) throws Exception {
+    this.mainStage = mainStage;
+    int width = 500;
+    int height = 700;
+    FXMLLoader loader = new FXMLLoader(Input.class.getClassLoader().getResource("loginGUI.fxml"));
+    Parent loginRoot = loader.load();
+    inputLogin = loader.getController();
+    inputLogin.mainApp = this;
+
+    constructLoginButtons();
+
+    loginScene = new Scene(loginRoot, width, height);
+    mainStage.setScene(loginScene);
+    loader = new FXMLLoader(Input.class.getClassLoader().getResource("mainGUI.fxml"));
+    Parent mainRoot = loader.load();
+    inputMain = loader.getController();
+    inputMain.mainApp = this;
+    loader = new FXMLLoader(Graph.class.getClassLoader().getResource("graphGUI.fxml"));
+    Parent graphRoot = loader.load();
+    graph = loader.getController();
+    graph.mainApp = this;
+    inputMain.graphContainer.getChildren().add(graphRoot);
+    mainScene = new Scene(mainRoot, width + 50, height);
+    loader = new FXMLLoader(Input.class.getClassLoader().getResource("newUserGUI.fxml"));
+    Parent newUserRoot = loader.load();
+    inputNewUser = loader.getController();
+    inputNewUser.mainApp = this;
+    newUserScene = new Scene(newUserRoot, width, height);
+    mainStage.setMinWidth(width);
+    mainStage.setMinHeight(height);
+    mainStage.setTitle("Daily Weight Tracker");
+    popupStage = new Stage();
+    popupStage.initModality(Modality.WINDOW_MODAL);
+    popupStage.initOwner(mainStage);
+    loader = new FXMLLoader(Input.class.getClassLoader().getResource("settingsGUI.fxml"));
+    Parent settingsRoot = loader.load();
+    inputSettings = loader.getController();
+    inputSettings.mainApp = this;
+    settingsScene = new Scene(settingsRoot, width, height);
+    mainStage.show();
+    
+
+  }
+
+  @Override
+  public void stop() {
+    if (user != null) {
+      try {
+        try {
+          users.add(user);
+        } catch (DuplicateUserException ex) {
+          ReadWriteJSON.writeUser(user);
+        }
+      } catch (IOException ex) {
+
+      }
+    }
+  }
+
 }
-
-

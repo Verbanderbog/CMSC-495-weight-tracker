@@ -17,7 +17,6 @@ public class User {
   private double targetWeight;
   private HashMap<Long,Double> dailyWeights;
   private String username;
-  private long birthdate;
   
   private User(){
     heights=new HashMap();
@@ -41,9 +40,7 @@ public class User {
   public void setUsername(String user){
     username=user;
   }
-  public void setBirthday(long date){
-    birthdate=date;
-  }
+
 
   
   public HashMap getHeights(){
@@ -64,8 +61,10 @@ public class User {
   public String getUsername(){
     return username;
   }
-  public long getBirthday(){
-    return birthdate;
+
+  
+  public double getCurrentWeight(){
+    return dailyWeights.get(Collections.max(dailyWeights.keySet()));
   }
   
   public List getSortedHeightKeys(){

@@ -5,61 +5,98 @@
  */
 package com.cmsc495project;
 
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 
 /**
  *
  * @author Dylan Veraart
  */
-public class Input {
+public class Input implements Initializable {
 
-  static TextField newUserName;
-  static TextField newUserWeight;
-  static TextField newUserTargetWeight;
-  static TextField newUserHeight;
-  static DatePicker newUserBirthDate;
-  static DatePicker newUserDate;
+  Main mainApp;
 
-  static TextField settingsName;
-  static DatePicker settingsBirthDate;
+  @FXML
+  TextField newUserName;
+  @FXML
+  TextField newUserWeight;
+  @FXML
+  TextField newUserTargetWeight;
+  @FXML
+  TextField newUserHeightFt;
+  @FXML
+  TextField newUserHeightIn;
 
-  static TextField dailyWeight;
-  static TextField dailyTargetWeight;
-  static TextField dailyHeight;
-  static DatePicker dailyDate;
+  @FXML
+  TextField settingsName;
+  @FXML
+  TextField settingsTargetWeight;
 
-  static VBox loginButtons;
-  static BorderPane graphContainer;
+  @FXML
+  TextField dailyWeight;
+  @FXML
+  TextField dailyTargetWeight;
+  @FXML
+  TextField dailyHeightFt;
+  @FXML
+  TextField dailyHeightIn;
+  @FXML
+  DatePicker dailyDate;
+  @FXML
+  VBox loginButtons;
+  @FXML
+  BorderPane graphContainer;
 
-  static Label weightLabel;
-  static Label BMILabel;
-  static Label BMIPercentLabel;
-  static Label goalLabel;
+  @FXML
+  Label weightLabel;
+  @FXML
+  Label BMILabel;
+  @FXML
+  Label BMIPercentLabel;
+  @FXML
+  Label goalLabel;
 
-  static Button userButton(String username) {
+  Button userButton(String username) {
     Button button = new Button(username);
+    button.setFont(new Font(30));
+    button.setMaxWidth(Double.MAX_VALUE);
     button.setOnAction(new EventHandler() {
 
       @Override
       public void handle(Event t) {
         try {
-          Main.user = ReadWriteJSON.readUser(username);
+          mainApp.user = ReadWriteJSON.readUser(username);
+
+          mainApp.mainStage.setScene(mainApp.mainScene);
+          mainApp.setMainLabels();
         } catch (Exception ex) {
-          
+
         }
-        Main.mainStage.setScene(Main.mainScene);
+
       }
     });
     return button;
   }
 
-  static Button newUserButton() {
+  Button newUserButton() {
     Button button = new Button("+ New User");
+    button.setFont(new Font(30));
+    button.setMaxWidth(Double.MAX_VALUE);
     button.setOnAction(new EventHandler() {
 
       @Override
@@ -70,56 +107,148 @@ public class Input {
     return button;
   }
 
-  static void addNewUser() {
-    Main.popupStage.setScene(Main.newUserScene);
-    Main.popupStage.show();
+  void addNewUser() {
+    mainApp.popupStage.setScene(mainApp.newUserScene);
+    mainApp.popupStage.show();
   }
 
-  static void submitNewUser() {
-    User user = new User(newUserName.getText());
-    user.setBirthday(newUserBirthDate.getValue());
-    Value of newUser fields to new User(), user;
-    Main.user = user;
-    Main.setMainLabels();
-    Main.users.add(user);
-    Main.popupStage.hide();
-    Main.mainStage.setScene(Main.mainScene);
-    Clear all newUser fields;
+  @FXML
+  void submitNewUser() {
+    try {
+      User user = new User(newUserName.getText());
+      user.setTargetWeight(Double.parseDouble(newUserTargetWeight.getText()));
+      user.addWeight(LocalDate.now().toEpochDay(), Double.parseDouble(newUserWeight.getText()));
+      double inches, feet;
+      feet = -1;
+      try {
+        inches = Double.parseDouble(newUserHeightIn.getText());
+      } catch (NumberFormatException ex) {
+        inches = 0;
+        try {
+          feet = Double.parseDouble(newUserHeightFt.getText()) * 12;
+        } catch (NumberFormatException c) {
+          throw new NumberFormatException();
+        }
+      }
+      if (feet < 0) {
+        feet = Double.parseDouble(newUserHeightFt.getText()) * 12;
+      }
+      if (feet + inches <= 0) {
+        throw new NumberFormatException();
+      }
+      user.addHeight(LocalDate.now().toEpochDay(), (int) (feet + inches));
+
+      mainApp.users.add(user);
+
+      newUserName.clear();
+      newUserWeight.clear();
+      newUserTargetWeight.clear();
+      newUserHeightFt.clear();
+      newUserHeightIn.clear();
+      mainApp.user = user;
+      mainApp.mainStage.setScene(mainApp.mainScene);
+      mainApp.setMainLabels();
+      mainApp.popupStage.hide();
+
+    } catch (DuplicateUserException ex) {
+      //add warning dialog
+    } catch (NumberFormatException ex) {
+      //add warning dialog
+    } catch (IOException ex) {
+
+    }
 
   }
 
-  static void addNewWeight() {
+  @FXML
+  void addNewWeight() {
+
+    /*
     1. Set dailyScene to popupStage;
     2. Show popupStage;
+     */
   }
 
-  static void submitNewWeight() {
+  @FXML
+  void submitNewWeight() {
+    /*
     1. Assign value of newUserWeight field to a daily weight variable;
     2. Store new weight 
     
     in HashMap of collective weights;
     3. Hide daily weight input scene;
     4. Set main scene;
+     */
   }
 
-  static void changeUserSettings() {
-    1. Set settingsScene to popupStage;
-    2. Show popupStage;
-    7
+  @FXML
+  void changeUserSettings() {
+    mainApp.popupStage.setScene(mainApp.settingsScene);
+    mainApp.popupStage.show();
   }
 
-  static void submitUserSettings() {
+  @FXML
+  void submitUserSettings() {
+    mainApp.popupStage.close();
+    /*
     1. Re - assign values of settings fields;
     2. Update labels for user data   as needed;
     3. Hide user settings scene;
     4. Set main scene;
+     */
   }
 
-}
+  @FXML
+  void deleteAccount() {
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+    alert.setTitle("Daily Weight Tracker");
+    alert.setHeaderText("Delete User Account");
+    alert.setContentText("Are you sure you want to delete your account? This cannot be undone.");
 
-static void logout(){
-		Main.constructLoginButtons();
-		Main.mainStage.setScene(Main.loginScene);
-		Main.user=null;
-	}
+    Optional<ButtonType> result = alert.showAndWait();
+    if (result.get() == ButtonType.OK) {
+      try {
+        mainApp.users.remove(mainApp.user);
+        mainApp.popupStage.hide();
+        mainApp.constructLoginButtons();
+        mainApp.mainStage.setScene(mainApp.loginScene);
+        mainApp.mainStage.setTitle("Daily Weight Tracker");
+        mainApp.user = null;
+      } catch (IOException ex) {
+
+      }
+
+    }
+  }
+
+  @FXML
+  void logout() {
+    mainApp.constructLoginButtons();
+    mainApp.mainStage.setScene(mainApp.loginScene);
+    mainApp.mainStage.setTitle("Daily Weight Tracker");
+    try {
+      ReadWriteJSON.writeUser(mainApp.user);
+    } catch (IOException ex) {
+
+    }
+    mainApp.user = null;
+
+  }
+
+  void setMain(Main main) {
+    mainApp = main;
+  }
+
+  @Override
+  public void initialize(URL url, ResourceBundle rb) {
+    if (graphContainer != null) {
+      try {
+        Parent graphRoot = FXMLLoader.load(Graph.class.getClassLoader().getResource("graphGUI.fxml"));
+        graphContainer.getChildren().add(graphRoot);
+      } catch (IOException ex) {
+
+      }
+
+    }
+  }
 }
