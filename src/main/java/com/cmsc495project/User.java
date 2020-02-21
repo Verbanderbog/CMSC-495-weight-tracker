@@ -43,7 +43,7 @@ public class User {
 
 
   
-  public HashMap getHeights(){
+  public HashMap<Long,Integer> getHeights(){
     return heights;
   }
   public int getHeight(long date){
@@ -52,7 +52,7 @@ public class User {
   public double getTargetWeight(){
     return targetWeight;
   }
-  public HashMap getDailyWeights(){
+  public HashMap<Long,Double> getDailyWeights(){
     return dailyWeights;
   }
   public double getWeight(long date){

@@ -61,7 +61,7 @@ public class Main extends Application {
     mainStage.setMinWidth(550);
     mainStage.setTitle("Daily Weight Tracker - " + user.getUsername());
     inputMain.weightLabel.setText(Double.toString(user.getCurrentWeight()));
-    inputMain.BMILabel.setText(Double.toString(Calculator.calcBMI(user)));
+    inputMain.BMILabel.setText(Double.toString(Calculator.calcCurrentBMI(user)));
     inputMain.BMIPercentLabel.setText(Double.toString(Calculator.calcBMIPercentChange(user)));
     inputMain.goalLabel.setText(Double.toString(user.getTargetWeight()));
 

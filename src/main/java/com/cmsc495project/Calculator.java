@@ -5,12 +5,19 @@
  */
 package com.cmsc495project;
 
+import java.util.Collections;
+
 /**
  *
  * @author Dylan Veraart
  */
 public class Calculator {
     
+  
+  static double calcCurrentBMI(User user) {
+    return calcBMI(user.getWeight(Collections.max(user.getDailyWeights().keySet())),user.getHeight(Collections.max(user.getHeights().keySet())));
+  }
+  
     // Method to calculate a BMI value
     static double calcBMI(double weight, int height) {
         // This formula is for units of pounds & inches
@@ -22,16 +29,16 @@ public class Calculator {
     
     // Method to calculate BMI % change
     static double calcBMIPercentChange(User user) {
-        double initialWeight = user.dailyWeights.get(Collections.min(user.dailyWeights.keySet()));
-        int initialHeight = user.heights.get(Collections.min(user.heights.keySet()));
-        double currentWeight = user.dailyWeights.get(Collections.max(user.dailyWeights.keySet()));
-        int currentHeight = user.heights.get(Collections.max(user.heights.keySet()));
+        double initialWeight = user.getWeight(Collections.min(user.getDailyWeights().keySet()));
+        int initialHeight = user.getHeight(Collections.min(user.getHeights().keySet()));
+        double currentWeight = user.getWeight(Collections.max(user.getDailyWeights().keySet()));
+        int currentHeight = user.getHeight(Collections.max(user.getHeights().keySet()));
         double initialBMI = calcBMI(initialWeight, initialHeight);
         double currentBMI = calcBMI(currentWeight, currentHeight);
         double percentChange = (currentBMI - initialBMI)/initialBMI * 100;
         // This rounds the percent change to one decimal place
         double roundedPercentChange = Math.round(percentChange * 10) / 10.0;
-        return roundedpercentChange;
+        return roundedPercentChange;
     }
     
 
