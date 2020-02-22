@@ -67,6 +67,7 @@ public class User {
     return dailyWeights.get(Collections.max(dailyWeights.keySet()));
   }
   
+  
   public List getSortedHeightKeys(){
     Set<Long> set = heights.keySet();
     List<Long> dates = new ArrayList<>(set);

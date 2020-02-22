@@ -7,7 +7,10 @@ package com.cmsc495project;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -83,7 +86,9 @@ public class Input implements Initializable {
           mainApp.user = ReadWriteJSON.readUser(username);
 
           mainApp.mainStage.setScene(mainApp.mainScene);
+          
           mainApp.setMainLabels();
+          
         } catch (Exception ex) {
 
         }
@@ -147,6 +152,7 @@ public class Input implements Initializable {
       newUserHeightIn.clear();
       mainApp.user = user;
       mainApp.mainStage.setScene(mainApp.mainScene);
+      mainApp.graph.startDatePicker.setValue(Instant.ofEpochMilli(Collections.min(mainApp.user.getDailyWeights().keySet())).atZone(ZoneId.systemDefault()).toLocalDate());
       mainApp.setMainLabels();
       mainApp.popupStage.hide();
 
@@ -162,7 +168,9 @@ public class Input implements Initializable {
 
   @FXML
   void addNewWeight() {
-
+    mainApp.popupStage.setScene(mainApp.dailyScene);
+    mainApp.inputDaily.dailyDate.setValue(LocalDate.now());
+    mainApp.popupStage.show();
     /*
     1. Set dailyScene to popupStage;
     2. Show popupStage;
@@ -171,6 +179,22 @@ public class Input implements Initializable {
 
   @FXML
   void submitNewWeight() {
+    try {
+    if (!dailyWeight.getText().equals("")){
+      mainApp.user.addWeight(dailyDate.getValue().toEpochDay(), Double.parseDouble(dailyWeight.getText()));
+    }
+    if (!(dailyHeightFt.getText().equals("")&&dailyHeightIn.getText().equals(""))){
+      mainApp.user.addHeight(dailyDate.getValue().toEpochDay(), (int) (Double.parseDouble(dailyHeightFt.getText())*12+Double.parseDouble(dailyHeightIn.getText())));
+    }
+    if (!dailyTargetWeight.getText().equals("")){
+      mainApp.user.setTargetWeight(Double.parseDouble(dailyTargetWeight.getText()));
+    }
+    mainApp.setMainLabels();
+    mainApp.popupStage.close();
+    } catch (NumberFormatException ex) {
+      //add warning dialog
+    }
+    
     /*
     1. Assign value of newUserWeight field to a daily weight variable;
     2. Store new weight 
@@ -184,35 +208,39 @@ public class Input implements Initializable {
   @FXML
   void changeUserSettings() {
     mainApp.popupStage.setScene(mainApp.settingsScene);
-    settingsName.setText(mainApp.user.getUsername());
-    settingsTargetWeight.setText(Double.toString(mainApp.user.getTargetWeight()));
+    mainApp.inputSettings.settingsDefault();
     mainApp.popupStage.show();
   }
 
+  void settingsDefault(){
+    settingsName.setText(mainApp.user.getUsername());
+    settingsTargetWeight.setText(Double.toString(mainApp.user.getTargetWeight()));
+  }
+  
   @FXML
   void submitUserSettings() {
 
     try {
       if (!mainApp.users.contains(settingsName.getText())) {
+        String oldUserName = mainApp.user.getUsername();
         mainApp.user.setUsername(settingsName.getText());
         mainApp.users.add(mainApp.user);
-      } else if(settingsName.getText()!=mainApp.user.getUsername()) {
+        mainApp.users.remove(oldUserName);
+      } else if(!settingsName.getText().equals(mainApp.user.getUsername())) {
         throw new DuplicateUserException();
       }
+
       mainApp.user.setTargetWeight(Double.parseDouble(settingsTargetWeight.getText()));
       mainApp.popupStage.hide();
+      mainApp.setMainLabels();
     } catch (DuplicateUserException ex) {
-
+      
     } catch (IOException ex) {
 
+    } catch (NumberFormatException ex) {
+      
     }
 
-    /*
-    1. Re - assign values of settings fields;
-    2. Update labels for user data   as needed;
-    3. Hide user settings scene;
-    4. Set main scene;
-     */
   }
 
   @FXML

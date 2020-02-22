@@ -8,6 +8,10 @@ package com.cmsc495project;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+
+import java.time.*;
+import java.util.Collections;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -23,7 +27,7 @@ import javafx.stage.Stage;
  * @author Dylan Veraart
  */
 public class Main extends Application {
-
+  Input inputDaily;
   Input inputMain;
   Input inputLogin;
   Input inputNewUser;
@@ -60,11 +64,16 @@ public class Main extends Application {
   void setMainLabels() {
     mainStage.setMinWidth(550);
     mainStage.setTitle("Daily Weight Tracker - " + user.getUsername());
+    System.out.println(Collections.min(user.getDailyWeights().keySet()).toString());
+    System.out.println(user.getDailyWeights().keySet().toString());
+    graph.startDatePicker.setValue(LocalDate.ofEpochDay(Collections.min(user.getDailyWeights().keySet())));
+    graph.endDatePicker.setValue(LocalDate.now());
+    graph.constructGraph();
     inputMain.weightLabel.setText(Double.toString(user.getCurrentWeight()));
     inputMain.BMILabel.setText(Double.toString(Calculator.calcCurrentBMI(user)));
     inputMain.BMIPercentLabel.setText(Double.toString(Calculator.calcBMIPercentChange(user)));
     inputMain.goalLabel.setText(Double.toString(user.getTargetWeight()));
-
+    
   }
 
   @Override
@@ -90,6 +99,7 @@ public class Main extends Application {
     graph = loader.getController();
     graph.mainApp = this;
     inputMain.graphContainer.setCenter(graphRoot);
+    
     mainScene = new Scene(mainRoot, width + 50, height);
     loader = new FXMLLoader(Input.class.getClassLoader().getResource("newUserGUI.fxml"));
     Parent newUserRoot = loader.load();
@@ -106,7 +116,12 @@ public class Main extends Application {
     Parent settingsRoot = loader.load();
     inputSettings = loader.getController();
     inputSettings.mainApp = this;
-    settingsScene = new Scene(settingsRoot, width, height);
+    settingsScene=new Scene(settingsRoot, width, height);
+    loader = new FXMLLoader(Input.class.getClassLoader().getResource("inputGUI.fxml"));
+    Parent dailyRoot = loader.load();
+    inputDaily = loader.getController();
+    inputDaily.mainApp = this;
+    dailyScene = new Scene(dailyRoot, width, height);
     mainStage.show();
     
 

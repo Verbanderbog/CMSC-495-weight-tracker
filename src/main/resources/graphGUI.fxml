@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmsc495project.Graph">
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmsc495project.Graph">
    <children>
       <HBox alignment="TOP_CENTER">
          <children>
-            <LineChart fx:id="graph">
+            <LineChart fx:id="chart">
                <xAxis>
                   <DateAxis fx:id="dateAxis" label="Date" side="BOTTOM" />
                </xAxis>
@@ -28,9 +28,9 @@
       </HBox>
       <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
          <children>
-            <DatePicker fx:id="startDatePicker" />
+            <DatePicker fx:id="startDatePicker" onAction="#startDateChange" />
             <Label text="—" />
-            <DatePicker fx:id="endDatePicker" />
+            <DatePicker fx:id="endDatePicker" onAction="#endDateChange" />
          </children>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

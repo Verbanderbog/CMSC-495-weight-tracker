@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="365.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmsc495project.Input">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="365.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmsc495project.Input">
    <bottom>
-      <Button mnemonicParsing="false" text="Submit" BorderPane.alignment="CENTER">
+      <Button mnemonicParsing="false" onAction="#submitNewWeight" text="Submit" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="20.0" />
          </BorderPane.margin>
@@ -36,7 +36,7 @@
                </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Weight" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <TextField GridPane.rowIndex="1" />
+                  <TextField fx:id="dailyWeight" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane alignment="CENTER_RIGHT">
@@ -50,7 +50,7 @@
                </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Goal Weight" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <TextField GridPane.rowIndex="1" />
+                  <TextField fx:id="dailyTargetWeight" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="200.0">
@@ -66,10 +66,10 @@
                </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Height" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <TextField prefHeight="25.0" prefWidth="112.0" GridPane.rowIndex="1" />
+                  <TextField fx:id="dailyHeightFt" prefHeight="25.0" prefWidth="112.0" GridPane.rowIndex="1" />
                   <Label text=" (ft.)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text=" (in.)" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="dailyHeightIn" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane alignment="CENTER_RIGHT">
@@ -82,7 +82,7 @@
                </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Date" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <DatePicker GridPane.rowIndex="1" />
+                  <DatePicker fx:id="dailyDate" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>
