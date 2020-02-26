@@ -64,16 +64,14 @@ public class Main extends Application {
   void setMainLabels() {
     mainStage.setMinWidth(550);
     mainStage.setTitle("Daily Weight Tracker - " + user.getUsername());
-    System.out.println(Collections.min(user.getDailyWeights().keySet()).toString());
-    System.out.println(user.getDailyWeights().keySet().toString());
     graph.startDatePicker.setValue(LocalDate.ofEpochDay(Collections.min(user.getDailyWeights().keySet())));
-    graph.endDatePicker.setValue(LocalDate.now());
+    graph.endDatePicker.setValue(LocalDate.ofEpochDay(LocalDate.now().toEpochDay()+Calculator.calcDaysToGoal(user)));
     graph.constructGraph();
     inputMain.weightLabel.setText(Double.toString(user.getCurrentWeight()));
     inputMain.BMILabel.setText(Double.toString(Calculator.calcCurrentBMI(user)));
     inputMain.BMIPercentLabel.setText(Double.toString(Calculator.calcBMIPercentChange(user)));
     inputMain.goalLabel.setText(Double.toString(user.getTargetWeight()));
-    
+    inputMain.goalDaysLabel.setText(Long.toString(Calculator.calcDaysToGoal(user)));
   }
 
   @Override

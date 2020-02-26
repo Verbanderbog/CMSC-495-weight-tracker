@@ -7,10 +7,7 @@ package com.cmsc495project;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,9 +15,7 @@ import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
@@ -73,6 +68,8 @@ public class Input implements Initializable {
   Label BMIPercentLabel;
   @FXML
   Label goalLabel;
+  @FXML
+  Label goalDaysLabel;
 
   Button userButton(String username) {
     Button button = new Button(username);
@@ -86,9 +83,9 @@ public class Input implements Initializable {
           mainApp.user = ReadWriteJSON.readUser(username);
 
           mainApp.mainStage.setScene(mainApp.mainScene);
-          
+
           mainApp.setMainLabels();
-          
+
         } catch (Exception ex) {
 
         }
@@ -120,28 +117,18 @@ public class Input implements Initializable {
   @FXML
   void submitNewUser() {
     try {
+      if (newUserName.getText().equals("") || (newUserHeightFt.getText().equals("") && newUserHeightIn.getText().equals("")) || newUserTargetWeight.getText().equals("") || newUserWeight.getText().equals("")) {
+        throw new MandatoryFieldException();
+      }
       User user = new User(newUserName.getText());
       user.setTargetWeight(Double.parseDouble(newUserTargetWeight.getText()));
       user.addWeight(LocalDate.now().toEpochDay(), Double.parseDouble(newUserWeight.getText()));
-      double inches, feet;
-      feet = -1;
-      try {
-        inches = Double.parseDouble(newUserHeightIn.getText());
-      } catch (NumberFormatException ex) {
-        inches = 0;
-        try {
-          feet = Double.parseDouble(newUserHeightFt.getText()) * 12;
-        } catch (NumberFormatException c) {
-          throw new NumberFormatException();
-        }
-      }
-      if (feet < 0) {
-        feet = Double.parseDouble(newUserHeightFt.getText()) * 12;
-      }
+      double feet = (!newUserHeightFt.getText().equals("")) ? Double.parseDouble(newUserHeightFt.getText()) : 0;
+      double inches = (!newUserHeightIn.getText().equals("")) ? Double.parseDouble(newUserHeightIn.getText()) : 0;
       if (feet + inches <= 0) {
         throw new NumberFormatException();
       }
-      user.addHeight(LocalDate.now().toEpochDay(), (int) (feet + inches));
+      user.addHeight(LocalDate.now().toEpochDay(), (int) (feet * 12 + inches));
 
       mainApp.users.add(user);
 
@@ -152,16 +139,33 @@ public class Input implements Initializable {
       newUserHeightIn.clear();
       mainApp.user = user;
       mainApp.mainStage.setScene(mainApp.mainScene);
-      mainApp.graph.startDatePicker.setValue(Instant.ofEpochMilli(Collections.min(mainApp.user.getDailyWeights().keySet())).atZone(ZoneId.systemDefault()).toLocalDate());
+
       mainApp.setMainLabels();
       mainApp.popupStage.hide();
 
     } catch (DuplicateUserException ex) {
-      //add warning dialog
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setTitle("Daily Weight Tracker");
+      alert.setHeaderText("Duplicate User Warning");
+      alert.setContentText("This username is already in use. Choose a unique name.");
+
+      alert.showAndWait();
     } catch (NumberFormatException ex) {
-      //add warning dialog
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setTitle("Daily Weight Tracker");
+      alert.setHeaderText("Non-numeric Input");
+      alert.setContentText("A field that requires numeric input has an invalid character.");
+
+      alert.showAndWait();
     } catch (IOException ex) {
 
+    } catch (MandatoryFieldException ex) {
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setTitle("Daily Weight Tracker");
+      alert.setHeaderText("Mandatory Input");
+      alert.setContentText("A mandatory field is blank. A fields must be filled to create a user.");
+
+      alert.showAndWait();
     }
 
   }
@@ -171,38 +175,35 @@ public class Input implements Initializable {
     mainApp.popupStage.setScene(mainApp.dailyScene);
     mainApp.inputDaily.dailyDate.setValue(LocalDate.now());
     mainApp.popupStage.show();
-    /*
-    1. Set dailyScene to popupStage;
-    2. Show popupStage;
-     */
   }
 
   @FXML
   void submitNewWeight() {
     try {
-    if (!dailyWeight.getText().equals("")){
-      mainApp.user.addWeight(dailyDate.getValue().toEpochDay(), Double.parseDouble(dailyWeight.getText()));
-    }
-    if (!(dailyHeightFt.getText().equals("")&&dailyHeightIn.getText().equals(""))){
-      mainApp.user.addHeight(dailyDate.getValue().toEpochDay(), (int) (Double.parseDouble(dailyHeightFt.getText())*12+Double.parseDouble(dailyHeightIn.getText())));
-    }
-    if (!dailyTargetWeight.getText().equals("")){
-      mainApp.user.setTargetWeight(Double.parseDouble(dailyTargetWeight.getText()));
-    }
-    mainApp.setMainLabels();
-    mainApp.popupStage.close();
+      if (!dailyWeight.getText().equals("")) {
+        mainApp.user.addWeight(dailyDate.getValue().toEpochDay(), Double.parseDouble(dailyWeight.getText()));
+      }
+      if (!(dailyHeightFt.getText().equals("") && dailyHeightIn.getText().equals(""))) {
+        double feet = (!dailyHeightFt.getText().equals("")) ? Double.parseDouble(dailyHeightFt.getText()) : 0;
+        double inches = (!dailyHeightIn.getText().equals("")) ? Double.parseDouble(dailyHeightIn.getText()) : 0;
+        if (feet + inches <= 0) {
+          throw new NumberFormatException();
+        }
+        mainApp.user.addHeight(dailyDate.getValue().toEpochDay(), (int) (feet * 12 + inches));
+      }
+      if (!dailyTargetWeight.getText().equals("")) {
+        mainApp.user.setTargetWeight(Double.parseDouble(dailyTargetWeight.getText()));
+      }
+      mainApp.setMainLabels();
+      mainApp.popupStage.close();
     } catch (NumberFormatException ex) {
-      //add warning dialog
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setTitle("Daily Weight Tracker");
+      alert.setHeaderText("Non-numeric Input");
+      alert.setContentText("A field that requires numeric input has an invalid character or is outside the appropriate range.");
+
+      alert.showAndWait();
     }
-    
-    /*
-    1. Assign value of newUserWeight field to a daily weight variable;
-    2. Store new weight 
-    
-    in HashMap of collective weights;
-    3. Hide daily weight input scene;
-    4. Set main scene;
-     */
   }
 
   @FXML
@@ -212,11 +213,11 @@ public class Input implements Initializable {
     mainApp.popupStage.show();
   }
 
-  void settingsDefault(){
+  void settingsDefault() {
     settingsName.setText(mainApp.user.getUsername());
     settingsTargetWeight.setText(Double.toString(mainApp.user.getTargetWeight()));
   }
-  
+
   @FXML
   void submitUserSettings() {
 
@@ -226,7 +227,7 @@ public class Input implements Initializable {
         mainApp.user.setUsername(settingsName.getText());
         mainApp.users.add(mainApp.user);
         mainApp.users.remove(oldUserName);
-      } else if(!settingsName.getText().equals(mainApp.user.getUsername())) {
+      } else if (!settingsName.getText().equals(mainApp.user.getUsername())) {
         throw new DuplicateUserException();
       }
 
@@ -234,11 +235,21 @@ public class Input implements Initializable {
       mainApp.popupStage.hide();
       mainApp.setMainLabels();
     } catch (DuplicateUserException ex) {
-      
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setTitle("Daily Weight Tracker");
+      alert.setHeaderText("Duplicate User Warning");
+      alert.setContentText("This username is already in use. Choose a unique name.");
+
+      alert.showAndWait();
     } catch (IOException ex) {
 
     } catch (NumberFormatException ex) {
-      
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setTitle("Daily Weight Tracker");
+      alert.setHeaderText("Non-numeric Input");
+      alert.setContentText("A field that requires numeric input has an invalid character.");
+
+      alert.showAndWait();
     }
 
   }
@@ -287,7 +298,5 @@ public class Input implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle rb) {
 
-
-    
   }
 }

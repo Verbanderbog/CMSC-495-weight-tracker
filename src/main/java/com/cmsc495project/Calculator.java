@@ -5,6 +5,7 @@
  */
 package com.cmsc495project;
 
+import java.time.LocalDate;
 import java.util.Collections;
 
 /**
@@ -41,6 +42,10 @@ public class Calculator {
         return roundedPercentChange;
     }
     
+    static long calcDaysToGoal(User user){
+      double currentWeight = user.getWeight(Collections.max(user.getDailyWeights().keySet()));
+      return (long) Math.ceil(Math.abs(user.getTargetWeight()-currentWeight)/(2));
+    }
 
 }
 
