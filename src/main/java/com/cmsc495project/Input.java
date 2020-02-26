@@ -111,6 +111,11 @@ public class Input implements Initializable {
 
   void addNewUser() {
     mainApp.popupStage.setScene(mainApp.newUserScene);
+    mainApp.popupStage.setTitle("Daily Weight Tracker");
+    mainApp.popupStage.setMinWidth(280);
+    mainApp.popupStage.setMinHeight(380);
+    mainApp.popupStage.setWidth(280);
+    mainApp.popupStage.setHeight(380);
     mainApp.popupStage.show();
   }
 
@@ -173,6 +178,11 @@ public class Input implements Initializable {
   @FXML
   void addNewWeight() {
     mainApp.popupStage.setScene(mainApp.dailyScene);
+    mainApp.popupStage.setTitle("Daily Weight Tracker - New Measurement");
+    mainApp.popupStage.setMinWidth(280);
+    mainApp.popupStage.setMinHeight(380);
+    mainApp.popupStage.setWidth(280);
+    mainApp.popupStage.setHeight(380);
     mainApp.inputDaily.dailyDate.setValue(LocalDate.now());
     mainApp.popupStage.show();
   }
@@ -180,6 +190,9 @@ public class Input implements Initializable {
   @FXML
   void submitNewWeight() {
     try {
+      if ((dailyHeightFt.getText().equals("") && dailyHeightIn.getText().equals("")) && dailyTargetWeight.getText().equals("") && dailyWeight.getText().equals("")) {
+        throw new MandatoryFieldException();
+      }
       if (!dailyWeight.getText().equals("")) {
         mainApp.user.addWeight(dailyDate.getValue().toEpochDay(), Double.parseDouble(dailyWeight.getText()));
       }
@@ -203,12 +216,23 @@ public class Input implements Initializable {
       alert.setContentText("A field that requires numeric input has an invalid character or is outside the appropriate range.");
 
       alert.showAndWait();
+    } catch (MandatoryFieldException ex) {
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setTitle("Daily Weight Tracker");
+      alert.setHeaderText("No Input");
+      alert.setContentText("You haven't added any new measurements.");
+      alert.showAndWait();
     }
   }
 
   @FXML
   void changeUserSettings() {
     mainApp.popupStage.setScene(mainApp.settingsScene);
+    mainApp.popupStage.setTitle("Daily Weight Tracker - User Settings");
+    mainApp.popupStage.setMinWidth(340);
+    mainApp.popupStage.setMinHeight(350);
+    mainApp.popupStage.setWidth(340);
+    mainApp.popupStage.setHeight(350);
     mainApp.inputSettings.settingsDefault();
     mainApp.popupStage.show();
   }

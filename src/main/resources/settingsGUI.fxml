@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="383.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmsc495project.Input">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmsc495project.Input">
    <bottom>
       <Button mnemonicParsing="false" onAction="#submitUserSettings" text="Submit" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -20,15 +20,14 @@
       </Button>
    </bottom>
    <center>
-      <VBox prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="50.0" right="50.0" top="50.0" />
          </BorderPane.margin>
          <children>
-            <GridPane alignment="CENTER_RIGHT">
+            <GridPane alignment="CENTER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="131.0" prefWidth="149.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="134.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -36,13 +35,13 @@
                </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Username" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <TextField fx:id="settingsName" prefHeight="25.0" prefWidth="165.0" GridPane.rowIndex="1" />
+                  <TextField fx:id="settingsName" prefHeight="25.0" prefWidth="173.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <GridPane alignment="CENTER_RIGHT">
+            <GridPane alignment="CENTER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="91.0" prefWidth="94.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="189.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" prefWidth="50.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -50,7 +49,7 @@
                </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Goal Weight" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <TextField fx:id="settingsTargetWeight" GridPane.rowIndex="1" />
+                  <TextField fx:id="settingsTargetWeight" prefHeight="25.0" prefWidth="126.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <Separator prefWidth="200.0">
@@ -58,7 +57,7 @@
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Separator>
-            <Button mnemonicParsing="false" onAction="#deleteAccount" text="Delete Account" />
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#deleteAccount" text="Delete Account" />
          </children>
       </VBox>
    </center>

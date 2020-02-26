@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="365.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmsc495project.Input">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="270.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmsc495project.Input">
    <bottom>
       <Button mnemonicParsing="false" onAction="#submitNewWeight" text="Submit" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -25,10 +25,9 @@
             <Insets bottom="10.0" left="50.0" right="50.0" top="50.0" />
          </BorderPane.margin>
          <children>
-            <GridPane alignment="CENTER_RIGHT">
+            <GridPane alignment="CENTER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="131.0" prefWidth="151.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="210.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -36,13 +35,12 @@
                </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Weight" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <TextField fx:id="dailyWeight" GridPane.rowIndex="1" />
+                  <TextField fx:id="dailyWeight" maxWidth="-Infinity" prefWidth="150.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <GridPane alignment="CENTER_RIGHT">
+            <GridPane alignment="CENTER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="131.0" prefWidth="151.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="210.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -50,15 +48,16 @@
                </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Goal Weight" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <TextField fx:id="dailyTargetWeight" GridPane.rowIndex="1" />
+                  <TextField fx:id="dailyTargetWeight" maxWidth="-Infinity" prefWidth="150.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <GridPane alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="200.0">
+            <GridPane alignment="CENTER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="88.0" prefWidth="88.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="39.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="103.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="45.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="40.0" prefWidth="40.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="10.0" prefWidth="29.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="40.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -66,15 +65,15 @@
                </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Height" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <TextField fx:id="dailyHeightFt" prefHeight="25.0" prefWidth="112.0" GridPane.rowIndex="1" />
+                  <TextField fx:id="dailyHeightFt" maxWidth="-Infinity" GridPane.rowIndex="1" />
                   <Label text=" (ft.)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text=" (in.)" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <TextField fx:id="dailyHeightIn" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text=" (in.)" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <TextField fx:id="dailyHeightIn" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <GridPane alignment="CENTER_RIGHT">
+            <GridPane alignment="CENTER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -82,7 +81,7 @@
                </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Date" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" />
-                  <DatePicker fx:id="dailyDate" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="dailyDate" prefHeight="25.0" prefWidth="157.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>
