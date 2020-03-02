@@ -8,19 +8,14 @@ package com.cmsc495project;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-
-import java.time.*;
-import java.util.Collections;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.fxml.*;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+
 
 /**
  *
@@ -28,9 +23,9 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
   Input inputDaily;
-  Input inputMain;
-  Input inputLogin;
-  Input inputNewUser;
+  private Input inputMain;
+  private Input inputLogin;
+  private Input inputNewUser;
   Input inputSettings;
   Graph graph;
   Stage mainStage;
@@ -64,8 +59,6 @@ public class Main extends Application {
   void setMainLabels() {
     mainStage.setMinWidth(550);
     mainStage.setTitle("Daily Weight Tracker - " + user.getUsername());
-    graph.startDatePicker.setValue(LocalDate.ofEpochDay(Collections.min(user.getDailyWeights().keySet())));
-    graph.endDatePicker.setValue(LocalDate.ofEpochDay(LocalDate.now().toEpochDay()+Calculator.calcDaysToGoal(user)));
     graph.constructGraph();
     inputMain.weightLabel.setText(Double.toString(user.getCurrentWeight()));
     inputMain.BMILabel.setText(Double.toString(Calculator.calcCurrentBMI(user)));
@@ -82,7 +75,7 @@ public class Main extends Application {
     FXMLLoader loader = new FXMLLoader(Input.class.getClassLoader().getResource("loginGUI.fxml"));
     Parent loginRoot = loader.load();
     inputLogin = loader.getController();
-    inputLogin.mainApp = this;
+    inputLogin.setMain(this);
 
     constructLoginButtons();
 
@@ -91,18 +84,18 @@ public class Main extends Application {
     loader = new FXMLLoader(Input.class.getClassLoader().getResource("mainGUI.fxml"));
     Parent mainRoot = loader.load();
     inputMain = loader.getController();
-    inputMain.mainApp = this;
+    inputMain.setMain(this);
     loader = new FXMLLoader(Graph.class.getClassLoader().getResource("graphGUI.fxml"));
     Parent graphRoot = loader.load();
     graph = loader.getController();
-    graph.mainApp = this;
+    graph.setMain(this);
     inputMain.graphContainer.setCenter(graphRoot);
     
     mainScene = new Scene(mainRoot, width + 50, height);
     loader = new FXMLLoader(Input.class.getClassLoader().getResource("newUserGUI.fxml"));
     Parent newUserRoot = loader.load();
     inputNewUser = loader.getController();
-    inputNewUser.mainApp = this;
+    inputNewUser.setMain(this);
     newUserScene = new Scene(newUserRoot, width, height);
     mainStage.setMinWidth(width);
     mainStage.setMinHeight(height);
@@ -113,12 +106,12 @@ public class Main extends Application {
     loader = new FXMLLoader(Input.class.getClassLoader().getResource("settingsGUI.fxml"));
     Parent settingsRoot = loader.load();
     inputSettings = loader.getController();
-    inputSettings.mainApp = this;
+    inputSettings.setMain(this);
     settingsScene=new Scene(settingsRoot, width, height);
     loader = new FXMLLoader(Input.class.getClassLoader().getResource("inputGUI.fxml"));
     Parent dailyRoot = loader.load();
     inputDaily = loader.getController();
-    inputDaily.mainApp = this;
+    inputDaily.setMain(this);
     dailyScene = new Scene(dailyRoot, width, height);
     mainStage.show();
     

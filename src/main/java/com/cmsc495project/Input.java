@@ -27,34 +27,34 @@ import javafx.scene.text.Font;
  */
 public class Input implements Initializable {
 
-  Main mainApp;
+  private Main mainApp;
 
   @FXML
-  TextField newUserName;
+  private TextField newUserName;
   @FXML
-  TextField newUserWeight;
+  private TextField newUserWeight;
   @FXML
-  TextField newUserTargetWeight;
+  private TextField newUserTargetWeight;
   @FXML
-  TextField newUserHeightFt;
+  private TextField newUserHeightFt;
   @FXML
-  TextField newUserHeightIn;
+  private TextField newUserHeightIn;
 
   @FXML
-  TextField settingsName;
+  private TextField settingsName;
   @FXML
-  TextField settingsTargetWeight;
+  private TextField settingsTargetWeight;
 
   @FXML
-  TextField dailyWeight;
+  private TextField dailyWeight;
   @FXML
-  TextField dailyTargetWeight;
+  private TextField dailyTargetWeight;
   @FXML
-  TextField dailyHeightFt;
+  private TextField dailyHeightFt;
   @FXML
-  TextField dailyHeightIn;
+  private TextField dailyHeightIn;
   @FXML
-  DatePicker dailyDate;
+  private DatePicker dailyDate;
   @FXML
   VBox loginButtons;
   @FXML
@@ -208,6 +208,10 @@ public class Input implements Initializable {
         mainApp.user.setTargetWeight(Double.parseDouble(dailyTargetWeight.getText()));
       }
       mainApp.setMainLabels();
+      dailyHeightFt.setText("");
+      dailyHeightIn.setText("");
+      dailyTargetWeight.setText("");
+      dailyWeight.setText("");
       mainApp.popupStage.close();
     } catch (NumberFormatException ex) {
       Alert alert = new Alert(AlertType.WARNING);

@@ -1,7 +1,7 @@
 package com.pixelduke.javafx.chart;
 
 import com.sun.javafx.charts.ChartLayoutAnimator;
-import com.sun.javafx.css.converters.SizeConverter;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.beans.property.*;
@@ -21,6 +21,7 @@ import javafx.util.converter.TimeStringConverter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import javafx.css.StyleConverter;
 
 /*
 * Created with IntelliJ IDEA.
@@ -505,9 +506,9 @@ public class DateAxis extends ValueAxis<Long> {
 
     /** @treatAsPrivate implementation detail */
     private static class StyleableProperties {
-        private static final CssMetaData<DateAxis,Number> TICK_UNIT =
+        private static final CssMetaData<DateAxis,Number> TICK_UNIT =//
                 new CssMetaData<DateAxis,Number>("-fx-tick-unit",
-                        SizeConverter.getInstance(), 5.0) {
+                        StyleConverter.getSizeConverter(), 5.0) {
 
                     @Override
                     public boolean isSettable(DateAxis n) {
