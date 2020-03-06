@@ -44,7 +44,7 @@ public class Calculator {
     
     static long calcDaysToGoal(User user){
       double currentWeight = user.getWeight(Collections.max(user.getDailyWeights().keySet()));
-      return (long) Math.ceil(Math.abs(user.getTargetWeight()-currentWeight)/(2));
+      return (long) Math.ceil(Math.abs(user.getTargetWeight()-currentWeight)/(2.0/7.0));
     }
 
 }
